@@ -2,7 +2,7 @@
 
 ### 100% Deterministic Bidirectional Word/Excel Transformation Engine
 
-DocuSync is a professional-grade tool designed for high-security corporate environments. It enables seamless transformation between unstructured Word documents and structured Excel workbooks using high-precision, rule-based logic while preserving semantic meaning, accuracy, and a consistent visual identity.
+DocuSync is a tool designed for corporate environments. It enables seamless transformation between unstructured Word documents and structured Excel workbooks using high-precision, rule-based logic while preserving semantic meaning, accuracy, and a consistent visual identity.
 
 ---
 
@@ -55,5 +55,3 @@ DocuSync follows a strict design system:
 - **Typography**: Inter (Modern Sans-serif)
 - **Excel Styles**: Orange headers, zebra-striped rows, conditional status coloring (Orange for OPEN, Emerald for CLOSED).
 
----
-**Developed by DocuSync Engineering - Operational Integrity**
