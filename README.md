@@ -1,4 +1,4 @@
-# DocuSync (Corporate Edition)
+# DocuSync
 
 ### 100% Deterministic Bidirectional Word/Excel Transformation Engine
 
