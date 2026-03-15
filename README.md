@@ -16,6 +16,15 @@ DocuSync is a tool designed for corporate environments. It enables seamless tran
 
 ---
 
+## Recent Improvements
+
+- **Harden Logic**: Added regex tolerance for variations in document formatting (e.g., spaces around colons).
+- **Security**: Implemented a 10MB file size limit for uploads to prevent OOM issues.
+- **Reliability**: Added comprehensive error handling and descriptive API responses.
+- **Configuration**: Standardized frontend API calls and removed stale AI/Ollama environment variables.
+
+---
+
 ## Architecture
 
 ```mermaid

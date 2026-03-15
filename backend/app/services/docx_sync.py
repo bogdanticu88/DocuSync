@@ -27,18 +27,18 @@ class DocxSyncService:
         current_item = None
 
         patterns = {
-            'finding': [r'Finding:\s*(.*)', r'Observation:\s*(.*)'],
-            'action': [r'Action:\s*(.*)', r'Recommendation:\s*(.*)'],
-            'owner': [r'Owner:\s*(.*)'],
-            'due_date': [r'Due Date:\s*(.*)', r'Deadline:\s*(.*)'],
-            'priority': [r'Priority:\s*(.*)'],
-            'risk': [r'Risk:\s*(.*)', r'Impact:\s*(.*)'],
-            'control': [r'Control:\s*(.*)', r'Mitigation:\s*(.*)'],
-            'status': [r'Status:\s*(.*)']
+            'finding': [r'Finding\s*:\s*(.*)', r'Observation\s*:\s*(.*)'],
+            'action': [r'Action\s*:\s*(.*)', r'Recommendation\s*:\s*(.*)'],
+            'owner': [r'Owner\s*:\s*(.*)'],
+            'due_date': [r'Due Date\s*:\s*(.*)', r'Deadline\s*:\s*(.*)'],
+            'priority': [r'Priority\s*:\s*(.*)'],
+            'risk': [r'Risk\s*:\s*(.*)', r'Impact\s*:\s*(.*)'],
+            'control': [r'Control\s*:\s*(.*)', r'Mitigation\s*:\s*(.*)'],
+            'status': [r'Status\s*:\s*(.*)']
         }
 
         def finalize_item(item):
-            if item and (item['finding'] or item['action']):
+            if item and (item['finding'].strip() or item['action'].strip()):
                 items.append(StructuredItem(**item))
 
         for para in doc.paragraphs:
@@ -53,12 +53,12 @@ class DocxSyncService:
                 continue
 
             # Detect start of a new finding/block
-            is_start = any(re.search(rf'^{label}:', text, re.I) for label in ['Finding', 'Observation'])
+            is_start = any(re.search(rf'^{label}\s*:', text, re.I) for label in ['Finding', 'Observation'])
             
             if is_start:
                 finalize_item(current_item)
                 current_item = {k: "" for k in ['finding', 'action', 'owner', 'due_date', 'priority', 'risk', 'control', 'status']}
-                current_item['category'] = current_category
+                current_item['category'] = current_category or "General"
 
             if current_item is not None:
                 # Try to extract any field from this paragraph
@@ -104,14 +104,28 @@ class DocxSyncService:
             cell.border = thin_border
         for item in items:
             ws.append([item.category, item.finding, item.action, item.owner, item.due_date, item.priority, item.risk, item.control, item.status])
-        for row in ws.iter_rows(min_row=2):
+        # Add zebra stripes and borders
+        light_orange_fill = PatternFill(start_color="FFF2E6", end_color="FFF2E6", fill_type="solid")
+        open_fill = PatternFill(start_color="FF6200", end_color="FF6200", fill_type="solid")
+        closed_fill = PatternFill(start_color="10B981", end_color="10B981", fill_type="solid")
+        white_font = Font(color="FFFFFF", bold=True)
+
+        for i, row in enumerate(ws.iter_rows(min_row=2), start=2):
+            is_even = i % 2 == 0
             for cell in row:
                 cell.border = thin_border
                 cell.alignment = Alignment(wrap_text=True, vertical="top")
+                if is_even:
+                    cell.fill = light_orange_fill
+                
                 if cell.column == 9: # Status
                     val = str(cell.value).upper()
-                    if "OPEN" in val: cell.font = Font(color="FF6200", bold=True)
-                    elif "CLOSED" in val: cell.font = Font(color="10B981", bold=True)
+                    if "OPEN" in val:
+                        cell.fill = open_fill
+                        cell.font = white_font
+                    elif "CLOSED" in val:
+                        cell.fill = closed_fill
+                        cell.font = white_font
         for col in ws.columns:
             max_length = 0
             column = col[0].column_letter

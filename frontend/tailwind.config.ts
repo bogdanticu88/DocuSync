@@ -11,14 +11,35 @@ const config: Config = {
       colors: {
         primary: {
           DEFAULT: "#FF6200",
-          light: "#FF8533",
-          dark: "#CC4E00",
+          50: "#FFF5ED",
+          100: "#FFE6D5",
+          200: "#FFC8A6",
+          300: "#FFA370",
+          400: "#FF823B",
+          500: "#FF6200",
+          600: "#E65800",
+          700: "#B34600",
         },
+        slate: {
+          50: "#F8FAFC",
+          100: "#F1F5F9",
+          200: "#E2E8F0",
+          300: "#CBD5E1",
+          400: "#94A3B8",
+          500: "#64748B",
+          600: "#475569",
+          700: "#334155",
+          800: "#1E293B",
+          900: "#0F172A",
+        }
       },
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic": "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      fontFamily: {
+        sans: ['Inter', 'system-ui', 'sans-serif'],
       },
+      boxShadow: {
+        'card': '0 2px 15px -3px rgba(0, 0, 0, 0.07), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+        'action': '0 10px 15px -3px rgba(255, 98, 0, 0.2)',
+      }
     },
   },
   plugins: [],

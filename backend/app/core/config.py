@@ -9,6 +9,9 @@ class Settings(BaseSettings):
     # CORS
     BACKEND_CORS_ORIGINS: List[str] = ["http://localhost:3000"]
 
+    # Security
+    MAX_UPLOAD_SIZE: int = 10 * 1024 * 1024  # 10MB
+
     class Config:
         env_file = ".env"
         case_sensitive = True

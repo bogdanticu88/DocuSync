@@ -4,7 +4,7 @@ import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export medical: Metadata = {
+export const metadata: Metadata = {
   title: "DocuSync | Narrative-to-Structure Engine",
   description: "Bidirectional Word/Excel Transformation Tool",
 };
